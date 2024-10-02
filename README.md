@@ -14,6 +14,9 @@ This is a simple social media platform built using laravel and tailwindcss.
 6. Add database configuration
 7. Run **php artisan key:generate**
 8. Run **php artisan storage:link**
-9. Run **php artisan migrate**
+9. Run **php artisan migrate --seed**
 10. Run **php artisan serve**
 11. All done!
+
+### Default Account Info
+Password: password

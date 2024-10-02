@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -12,12 +13,12 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('profile');
+        return view('pages.profile.index');
     }
     
     public function edit()
     {
-        return view('edit-profile');
+        return view('pages.profile.edit');
     }
     
     public function update(ProfileUpdateRequest $request)
@@ -39,7 +40,7 @@ class ProfileController extends Controller
             $data['avatar'] = $request->file('avatar')->store('avatars');
         }
 
-        DB::table('users')->where('id', $request->user()->id)->update($data);
+        User::where('id', $request->user()->id)->update($data);
 
         return redirect()->back()->with('success', 'Your profile has been updated!');
     }

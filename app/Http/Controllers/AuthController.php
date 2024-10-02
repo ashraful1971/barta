@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -41,7 +41,7 @@ class AuthController extends Controller
         $data['created_at'] = now();
         $data['updated_at'] = now();
 
-        DB::table('users')->insert($data);
+        User::create($data);
 
         return to_route('login.index')->with('success', 'Your registration was successfull!');
     }

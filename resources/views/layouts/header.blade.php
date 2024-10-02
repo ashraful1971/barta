@@ -10,7 +10,17 @@
                         </a>
                     </div>
                 </div>
+                <!-- Search input -->
+                <form action="" method="POST" class="flex items-center">
+                    <input type="text" placeholder="Search..."
+                        class="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none" />
+                </form>
                 <div class="hidden sm:ml-6 sm:flex gap-2 sm:items-center">
+
+                    <button type="button"
+                        class="text-gray-900 hover:text-white border-2 border-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden md:block">
+                        Create Post
+                    </button>
 
                     <!-- Profile dropdown -->
                     <div class="relative ml-3" x-data="{ open: false }">
@@ -19,8 +29,9 @@
                                 class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full object-cover" src="{{ auth()->user()->avatar ? asset('storage/'.auth()->user()->avatar) : asset('images/avatar.png') }}"
-                                    alt="Ahmed Shamim Hasan Shaon" />
+                                <img class="h-8 w-8 rounded-full object-cover"
+                                    src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('images/avatar.png') }}"
+                                    alt="Picture" />
                             </button>
                         </div>
 
@@ -29,13 +40,15 @@
                             class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                             tabindex="-1">
-                            <a href="{{ route('profile.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                            <a href="{{ route('profile.index') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                                tabindex="-1" id="user-menu-item-0">Your Profile</a>
                             <a href="{{ route('profile.edit') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                 tabindex="-1" id="user-menu-item-1">Edit Profile</a>
-                            <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                            <a href="{{ route('logout') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                                tabindex="-1" id="user-menu-item-2">Sign out</a>
                         </div>
                     </div>
                 </div>
