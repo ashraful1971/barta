@@ -8,12 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest()->with(['user','comments'])->get();
+        $posts = Post::latest()
+            ->with(['user', 'comments'])
+            ->when($request->search != '', function ($query) use ($request) {
+                return $query->whereHas('user', fn($q) => $q->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('username', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%'));
+            })
+            ->get();
         return view('pages.feed', compact('posts'));
     }
-    
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -21,7 +28,7 @@ class HomeController extends Controller
             'image' => 'image|nullable'
         ]);
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $validatedData['image'] = $request->file('image')->store('images');
         }
 
@@ -34,12 +41,12 @@ class HomeController extends Controller
     {
         return view('pages.post.show', compact('post'));
     }
-    
+
     public function edit(Post $post)
     {
         return view('pages.post.edit', compact('post'));
     }
-    
+
     public function update(Request $request, Post $post)
     {
         $validatedData = $request->validate([
@@ -47,11 +54,11 @@ class HomeController extends Controller
             'image' => 'image|nullable'
         ]);
 
-        if($request->hasFile('image')){
-            if($post->image){
+        if ($request->hasFile('image')) {
+            if ($post->image) {
                 Storage::delete($post->image);
             }
-            
+
             $validatedData['image'] = $request->file('image')->store('images');
         }
 
@@ -59,15 +66,15 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
-    
+
     public function destroy(Post $post)
     {
-        if($post->image){
+        if ($post->image) {
             Storage::delete($post->image);
         }
-        
+
         $post->delete();
-        
+
         return redirect()->back();
     }
 }
